@@ -258,3 +258,4 @@
 /Users/hudsonroney/RiderProjects/WaterProject/backend/WaterProject/WaterProject/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Drawing.Common.dll
 /Users/hudsonroney/RiderProjects/WaterProject/backend/WaterProject/WaterProject/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Security.Cryptography.ProtectedData.dll
 /Users/hudsonroney/RiderProjects/WaterProject/backend/WaterProject/WaterProject/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Windows.Extensions.dll
+/Users/hudsonroney/RiderProjects/WaterProject/backend/WaterProject/WaterProject/obj/Debug/net8.0/WaterProject.sourcelink.json
