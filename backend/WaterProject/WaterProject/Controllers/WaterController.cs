@@ -18,6 +18,20 @@ namespace WaterProject.Controllers
         [HttpGet ("AllProjects")]
         public IActionResult GetProjects(int pageSize = 5, int pageNum = 1)
         {
+            
+            
+            string? favProjectType = Request.Cookies["FavoriteProjectType"];
+            Console.WriteLine("~~~~~~~~~COOKIE~~~~~~~~~~~ \n" + favProjectType );
+            
+            
+            HttpContext.Response.Cookies.Append("FavoriteProjectType", "Protected Spring", new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true, // set this as false if you are developing and its not https
+                    SameSite = SameSiteMode.Strict, // limit wether we are allowed to have cookies from different sites or domain names
+                    Expires = DateTime.Now.AddMinutes(1), //this should be shorter if its a financial institution
+                });
+            
             var something = _context.Projects
                 .Skip((pageNum-1) * pageSize)
                 .Take(pageSize)
