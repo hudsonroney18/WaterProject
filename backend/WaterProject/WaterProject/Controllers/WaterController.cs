@@ -16,8 +16,9 @@ namespace WaterProject.Controllers
         }
 
         [HttpGet ("AllProjects")]
-        public IActionResult GetProjects(int pageSize = 5, int pageNum = 1)
+        public IActionResult GetProjects(int pageSize = 5, int pageNum = 1,[FromQuery] List<string>? projectTypes = null)
         {
+            
             
             
             string? favProjectType = Request.Cookies["FavoriteProjectType"];
@@ -32,12 +33,20 @@ namespace WaterProject.Controllers
                     Expires = DateTime.Now.AddMinutes(1), //this should be shorter if its a financial institution
                 });
             
-            var something = _context.Projects
+            IQueryable<Project> query = _context.Projects.AsQueryable();
+
+            if (projectTypes != null && projectTypes.Any())
+            {
+                query = query.Where(p => projectTypes.Contains(p.ProjectType ?? ""));
+            }
+
+            var totalNumProjects = query.Count();
+            var something = query
                 .Skip((pageNum-1) * pageSize)
                 .Take(pageSize)
             .ToList();
             
-            var totalNumProjects = _context.Projects.Count();
+
 
             var someObject = new
             {
@@ -48,11 +57,14 @@ namespace WaterProject.Controllers
             return Ok(someObject);
         }
         
-        [HttpGet("FunctionalProjects")]
-        public IEnumerable<Project> GetFunctionalProjects()
+        [HttpGet("GetProjectTypes")]
+        public IActionResult GetProjectTypes()
         {
-            var something = _context.Projects.Where(x => x.ProjectFunctionalityStatus == "Functional").ToList();
-            return something;
+            var projectTypes = _context.Projects
+            .Select(p => p.ProjectType)
+            .Distinct()
+            .ToList();
+            return Ok(projectTypes);
         }
     }
 }
