@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
-import { Project } from './types/project';
+import { Project } from '../types/project';
+import { useNavigate } from 'react-router-dom';
 
-
-function ProjectList({selectedCategories}: {selectedCategories: string[]}) {
+function ProjectList({ selectedCategories }: { selectedCategories: string[] }) {
   const [projects, setProjects] = useState<Project[]>([]);
   const [pageSize, setPageSize] = useState<number>(10);
   const [pageNum, setPageNum] = useState<number>(1);
   const [totalItems, setTotalItems] = useState<number>(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProjects = async () => {
-
       const categoryParams = selectedCategories
         .map((cat) => `projectTypes=${encodeURIComponent(cat)}`)
-        .join('&')
+        .join('&');
 
       const response = await fetch(
-        `https://localhost:5000/api/Water/AllProjects?pageSize=${pageSize}&pageNum=${pageNum}${selectedCategories.length ? `&${categoryParams}`: ''}`, 
+        `https://localhost:5000/api/Water/AllProjects?pageSize=${pageSize}&pageNum=${pageNum}${selectedCategories.length ? `&${categoryParams}` : ''}`,
         {
           credentials: 'include',
         }
@@ -61,6 +61,11 @@ function ProjectList({selectedCategories}: {selectedCategories: string[]}) {
                 <strong>Project Status:</strong> {p.projectFunctionalityStatus}
               </li>
             </ul>
+            <button className='btn btn-success' 
+            onClick={() => navigate(`/donate/${p.projectName}/${p.projectId}`)} 
+            >
+              Donate
+              </button>
           </div>
         </div>
       ))}
@@ -78,7 +83,8 @@ function ProjectList({selectedCategories}: {selectedCategories: string[]}) {
         {[...Array(totalPages)].map((_, index) => (
           <button
             key={index + 1}
-            onClick={() => setPageNum(index + 1)} disabled={pageNum === (index + 1)}
+            onClick={() => setPageNum(index + 1)}
+            disabled={pageNum === index + 1}
             style={{
               backgroundColor: pageNum === index + 1 ? '#007bff' : 'white',
               color: pageNum === index + 1 ? 'white' : 'black',
@@ -105,7 +111,7 @@ function ProjectList({selectedCategories}: {selectedCategories: string[]}) {
         <select
           value={pageSize}
           onChange={(p) => {
-            setPageSize(Number(p.target.value))
+            setPageSize(Number(p.target.value));
             setPageNum(1);
           }}
         >
