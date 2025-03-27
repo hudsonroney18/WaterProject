@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import WelcomeBand from "../components/WelcomeBand";
 import { useCart } from "../context/CartContext";
-import { CartItem } from "../types/cartItem";
+import { CartItem } from "../types/CartItem.ts";
 import { useState } from "react";
 
 function DonatePage() {
