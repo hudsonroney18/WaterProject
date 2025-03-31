@@ -23,7 +23,7 @@ function App() {
       <CookieConsent>
         This website uses cookies to enhance the user experience.
       </CookieConsent>
-      <Fingerprint />
+      {/* <Fingerprint /> */}
     </>
   );
 }
