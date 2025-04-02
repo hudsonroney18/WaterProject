@@ -11,7 +11,7 @@ function CategoryFilter({selectedCategories, setSelectedCategories}: {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          'https://localhost:5000/api/Water/GetProjectTypes'
+          'https://localhost:5000/Water/GetProjectTypes'
         );
         const data = await response.json();
         console.log('fetched categories', data);
