@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Project } from '../types/project';
 import { useNavigate } from 'react-router-dom';
 import { fetchProjects } from '../api/projectsapi';
-import Pagination from './pagination';
+import Pagination from './Pagination';
 
 function ProjectList({ selectedCategories }: { selectedCategories: string[] }) {
   const [projects, setProjects] = useState<Project[]>([]);
